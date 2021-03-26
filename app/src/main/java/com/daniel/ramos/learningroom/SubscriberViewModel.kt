@@ -2,6 +2,7 @@ package com.daniel.ramos.learningroom
 
 import androidx.databinding.Bindable
 import androidx.databinding.Observable
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,6 +29,11 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
     @Bindable
     val clearAllOrDeleteButtonText = MutableLiveData<String>()
 
+    private val statusMessage = MutableLiveData<Event<String>>()
+
+    val message: LiveData<Event<String>>
+        get() = statusMessage
+
     init {
         saveOrUpdateButtonText.value = "Save"
         clearAllOrDeleteButtonText.value = "Clear All"
@@ -39,10 +45,6 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
             subscriberToUpdateOrDelete.email = inputEmail.value!!
             update(subscriberToUpdateOrDelete)
         }
-        val name = inputName.value!!
-        val email = inputEmail.value!!
-        // Passando id 0, room vai ignorar e incrementar automaticamente um valor
-        insert(Subscriber(0, name, email))
         inputName.value = null
         inputEmail.value = null
     }
@@ -59,6 +61,7 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
         // Fazer essa chamada por uma thread de background
         viewModelScope.launch {
             repository.insert(subscriber)
+            statusMessage.value = Event("Subscriber Inserted Succesfuly")
         }
 
     fun update(subscriber: Subscriber): Job = viewModelScope.launch {
@@ -68,6 +71,7 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
         isUpdateOrDelete = false
         saveOrUpdateButtonText.value = "Save"
         clearAllOrDeleteButtonText.value = "Clear All"
+        statusMessage.value = Event("Subscriber Updated Succesfuly")
     }
 
     fun delete(subscriber: Subscriber): Job = viewModelScope.launch {
@@ -77,10 +81,12 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
         isUpdateOrDelete = false
         saveOrUpdateButtonText.value = "Save"
         clearAllOrDeleteButtonText.value = "Clear All"
+        statusMessage.value = Event("Subscriber Deleted Succesfuly")
     }
 
     fun clearAll(): Job = viewModelScope.launch {
         repository.deleteAll()
+        statusMessage.value = Event("All Subscribers Deleted Succesfuly")
     }
 
     fun initUpdateAndDelete(subscriber: Subscriber) {
