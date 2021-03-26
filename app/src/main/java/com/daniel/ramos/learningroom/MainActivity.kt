@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var subscriberViewModel: SubscriberViewModel
+    private lateinit var adapter: MyRecyclerViewAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -37,13 +39,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         binding.subscriberRecyclerView.layoutManager = LinearLayoutManager(this)
+        // O segundo parâmetro é uma função lambda, que recebe como parâmetro um Subscriber
+        adapter = MyRecyclerViewAdapter({selectedItem: Subscriber->listItemClicked(selectedItem)})
+        binding.subscriberRecyclerView.adapter = adapter
         displaySubscribersList()
     }
 
     private fun displaySubscribersList() {
-        subscriberViewModel.subscribers.observe(this, Observer {subscribersList ->
-            // O segundo parâmetro é uma função lambda, que recebe como parâmetro um Subscriber
-            binding.subscriberRecyclerView.adapter = MyRecyclerViewAdapter(subscribersList, {selectedItem: Subscriber->listItemClicked(selectedItem)})
+        subscriberViewModel.subscribers.observe(this, Observer {
+            adapter.setList(it)
+            adapter.notifyDataSetChanged()
         })
     }
 
