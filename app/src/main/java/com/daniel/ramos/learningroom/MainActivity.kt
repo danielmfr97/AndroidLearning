@@ -3,10 +3,13 @@ package com.daniel.ramos.learningroom
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.daniel.ramos.learningroom.databinding.ActivityMainBinding
+import com.daniel.ramos.learningroom.db.Subscriber
 import com.daniel.ramos.learningroom.db.SubscriberDatabase
 import com.daniel.ramos.learningroom.db.SubscriberRepository
 
@@ -23,13 +26,22 @@ class MainActivity : AppCompatActivity() {
         subscriberViewModel = ViewModelProvider(this, factory).get(SubscriberViewModel::class.java)
         binding.myViewModel = subscriberViewModel
         binding.lifecycleOwner = this
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() {
+        binding.subscriberRecyclerView.layoutManager = LinearLayoutManager(this)
         displaySubscribersList()
     }
 
-
     private fun displaySubscribersList() {
-         subscriberViewModel.subscribers.observe(this, Observer {
-             Log.i("MYTAG", it.toString())
-         })
+        subscriberViewModel.subscribers.observe(this, Observer {subscribersList ->
+            // O segundo parâmetro é uma função lambda, que recebe como parâmetro um Subscriber
+            binding.subscriberRecyclerView.adapter = MyRecyclerViewAdapter(subscribersList, {selectedItem: Subscriber->listItemClicked(selectedItem)})
+        })
+    }
+
+    private fun listItemClicked(subscriber: Subscriber) {
+        Toast.makeText(this, "Item clicked: ${subscriber.name}", Toast.LENGTH_LONG).show()
     }
 }
