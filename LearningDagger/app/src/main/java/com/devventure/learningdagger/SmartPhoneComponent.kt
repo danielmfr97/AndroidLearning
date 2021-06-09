@@ -5,7 +5,7 @@ import dagger.Component
 /**
  * Created by danie on 09/06/2021
  */
-@Component
+@Component(modules = [MemoryCardModule::class])
 interface SmartPhoneComponent {
     fun getSmartPhone(): SmartPhone
 }
