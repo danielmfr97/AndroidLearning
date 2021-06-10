@@ -1,6 +1,12 @@
 package com.devventure.moviesmvvm.data.model.artist
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "popular_artists")
 data class Artist(
+
+    @PrimaryKey
     val id: Int,
     val name: String,
     val popularity: Double,
