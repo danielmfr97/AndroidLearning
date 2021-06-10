@@ -1,4 +1,4 @@
-package com.devventure.moviesmvvm.data
+package com.devventure.moviesmvvm.data.model.tvshow
 
 data class TvShowList(
     val results: List<TvShow>

@@ -1,4 +1,4 @@
-package com.devventure.moviesmvvm.data
+package com.devventure.moviesmvvm.data.model.movie
 
 data class Movie(
     val id: Int,

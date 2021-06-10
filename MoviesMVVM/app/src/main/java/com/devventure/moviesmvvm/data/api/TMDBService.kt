@@ -1,8 +1,8 @@
 package com.devventure.moviesmvvm.data.api
 
-import com.devventure.moviesmvvm.data.ArtistList
-import com.devventure.moviesmvvm.data.MovieList
-import com.devventure.moviesmvvm.data.TvShowList
+import com.devventure.moviesmvvm.data.model.artist.ArtistList
+import com.devventure.moviesmvvm.data.model.movie.MovieList
+import com.devventure.moviesmvvm.data.model.tvshow.TvShowList
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

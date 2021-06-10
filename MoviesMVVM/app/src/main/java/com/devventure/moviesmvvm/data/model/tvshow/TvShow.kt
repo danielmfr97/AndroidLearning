@@ -1,4 +1,4 @@
-package com.devventure.moviesmvvm.data
+package com.devventure.moviesmvvm.data.model.tvshow
 
 data class TvShow(
     val first_air_date: String,

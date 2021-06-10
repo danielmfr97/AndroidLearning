@@ -1,4 +1,4 @@
-package com.devventure.moviesmvvm.data
+package com.devventure.moviesmvvm.data.model.artist
 
 data class Artist(
     val id: Int,
