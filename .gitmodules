@@ -1,0 +1,3 @@
+[submodule "CWM/EspressoUITest-Examples"]
+	path = CWM/EspressoUITest-Examples
+	url = https://github.com/mitchtabian/EspressoUITest-Examples
