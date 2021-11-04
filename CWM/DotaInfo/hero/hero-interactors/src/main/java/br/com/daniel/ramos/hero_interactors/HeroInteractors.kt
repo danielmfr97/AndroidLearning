@@ -1,6 +1,8 @@
 package br.com.daniel.ramos.hero_interactors
 
+import br.com.daniel.ramos.hero_datasource.cache.HeroCache
 import br.com.daniel.ramos.hero_datasource.network.HeroService
+import com.squareup.sqldelight.db.SqlDriver
 
 /**
  *
@@ -14,10 +16,11 @@ data class HeroInteractors(
      * Construimos nossos interactors, dando acesso aos useCases
      */
     companion object Factory {
-        fun build(): HeroInteractors {
+        fun build(sqlDriver: SqlDriver): HeroInteractors {
             val service = HeroService.build()
+            val cache = HeroCache.build(sqlDriver)
             return HeroInteractors(
-                getHeroes = GetHeroes(service = service)
+                getHeroes = GetHeroes(service = service, cache = cache)
             )
         }
     }
