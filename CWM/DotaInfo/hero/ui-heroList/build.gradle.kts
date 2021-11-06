@@ -5,5 +5,9 @@ apply {
 
 // Dependencias que não estão no arquivo acima, mas desejamos utilizar no modulo
 dependencies {
+    "implementation"(project(Modules.core))
+    "implementation"(project(Modules.heroDomain))
+    "implementation"(project(Modules.heroInteractors))
 
+    "implementation"(SqlDelight.androidDriver)
 }

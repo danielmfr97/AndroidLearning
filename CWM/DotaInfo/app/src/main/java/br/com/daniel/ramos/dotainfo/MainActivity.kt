@@ -24,6 +24,8 @@ import br.com.daniel.ramos.core.UIComponent
 import br.com.daniel.ramos.dotainfo.ui.theme.DotaInfoTheme
 import br.com.daniel.ramos.hero_domain.Hero
 import br.com.daniel.ramos.hero_interactors.HeroInteractors
+import br.com.daniel.ramos.ui_heroList.HeroList
+import br.com.daniel.ramos.ui_heroList.HeroListState
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -32,18 +34,19 @@ import kotlinx.coroutines.flow.onEach
 
 class MainActivity : ComponentActivity() {
 
-    private val heros: MutableState<List<Hero>> = mutableStateOf(listOf())
+    private val state: MutableState<HeroListState> = mutableStateOf(HeroListState())
     private val progressBarState: MutableState<ProgressBarState> =
         mutableStateOf(ProgressBarState.Idle)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val getHeroes = HeroInteractors.build(sqlDriver = AndroidSqliteDriver(
-            schema = HeroInteractors.schema,
-            context = this,
-            name = HeroInteractors.dbName
-        )
+        val getHeroes = HeroInteractors.build(
+            sqlDriver = AndroidSqliteDriver(
+                schema = HeroInteractors.schema,
+                context = this,
+                name = HeroInteractors.dbName
+            )
         ).getHeroes
         val logger = Logger("GetHerosTest")
         getHeroes.execute().onEach { dataState ->
@@ -59,7 +62,7 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 is DataState.Data -> {
-                    heros.value = dataState.data ?: listOf()
+                    state.value = state.value.copy(heros = dataState.data ?: listOf())
                 }
                 is DataState.Loading -> {
                     progressBarState.value = dataState.progressBarState
@@ -69,30 +72,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DotaInfoTheme {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    LazyColumn {
-                        items(heros.value) { hero ->
-                            Text(hero.localizedName)
-                        }
-                    }
-                    if (progressBarState.value is ProgressBarState.Loading) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                    }
-                }
+                HeroList(state = state.value)
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    DotaInfoTheme {
-        Greeting("Android")
     }
 }
