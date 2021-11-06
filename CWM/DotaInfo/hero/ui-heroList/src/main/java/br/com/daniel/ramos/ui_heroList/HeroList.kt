@@ -10,15 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import br.com.daniel.ramos.core.ProgressBarState
+import coil.ImageLoader
 
 @Composable
-fun HeroList(state: HeroListState) {
+fun HeroList(state: HeroListState, imageLoader: ImageLoader) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn{
             items(state.heros) { hero ->
                 HeroListItem(
                     hero = hero,
-                    onSelectHero = {}
+                    onSelectHero = {},
+                    imageLoader = imageLoader
                 )
             }
         }

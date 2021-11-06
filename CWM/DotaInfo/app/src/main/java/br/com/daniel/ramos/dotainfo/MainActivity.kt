@@ -26,6 +26,7 @@ import br.com.daniel.ramos.hero_domain.Hero
 import br.com.daniel.ramos.hero_interactors.HeroInteractors
 import br.com.daniel.ramos.ui_heroList.HeroList
 import br.com.daniel.ramos.ui_heroList.HeroListState
+import coil.ImageLoader
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -38,8 +39,18 @@ class MainActivity : ComponentActivity() {
     private val progressBarState: MutableState<ProgressBarState> =
         mutableStateOf(ProgressBarState.Idle)
 
+    // Create an imageLoader and use its on entire app
+    private lateinit var imageLoader: ImageLoader // Best practice with coil
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        imageLoader = ImageLoader.Builder(applicationContext)
+            .error(R.drawable.error_image)
+            .placeholder(R.drawable.white_background)
+            .availableMemoryPercentage(.25) // from docs
+            .crossfade(true)
+            .build()
 
         val getHeroes = HeroInteractors.build(
             sqlDriver = AndroidSqliteDriver(
@@ -72,7 +83,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DotaInfoTheme {
-                HeroList(state = state.value)
+                HeroList(state = state.value, imageLoader = imageLoader)
             }
         }
     }

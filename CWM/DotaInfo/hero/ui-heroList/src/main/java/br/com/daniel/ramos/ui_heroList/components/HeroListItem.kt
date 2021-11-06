@@ -1,7 +1,9 @@
 package br.com.daniel.ramos.ui_heroList
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -10,20 +12,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import br.com.daniel.ramos.hero_domain.Hero
+import br.com.daniel.ramos.ui_heroList.R
 import br.com.daniel.ramos.ui_heroList.ui.TAG_HERO_NAME
 import br.com.daniel.ramos.ui_heroList.ui.TAG_HERO_PRIMARY_ATTRIBUTE
+import coil.ImageLoader
+import coil.compose.rememberImagePainter
 import kotlin.math.round
 
 @Composable
 fun HeroListItem(
     hero: Hero,
     onSelectHero: (Int) -> Unit,
-    // imageLoader: ImageLoader, // TODO
-){
+    imageLoader: ImageLoader,
+) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -31,22 +37,29 @@ fun HeroListItem(
             .background(MaterialTheme.colors.surface)
             .clickable {
                 onSelectHero(hero.id)
-            }
-        ,
+            },
         elevation = 8.dp
-    ){
+    ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-            ,
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
-        ){
-            Box( // TODO(Replace with Image)
+        ) {
+            val painter = rememberImagePainter(
+                hero.img,
+                imageLoader = imageLoader,
+                builder = {
+                    placeholder(if (isSystemInDarkTheme()) R.drawable.black_background else R.drawable.white_background)
+                }
+            )
+            Image(
                 modifier = Modifier
                     .width(120.dp)
                     .height(70.dp)
-                    .background(Color.LightGray)
-                ,
+                    .background(Color.LightGray),
+                painter = painter,
+                contentDescription = hero.localizedName,
+                contentScale = ContentScale.Crop,
             )
             Column(
                 modifier = Modifier
@@ -56,8 +69,7 @@ fun HeroListItem(
                 Text(
                     modifier = Modifier
                         .padding(bottom = 4.dp)
-                        .testTag(TAG_HERO_NAME)
-                    ,
+                        .testTag(TAG_HERO_NAME),
                     text = hero.localizedName,
                     style = MaterialTheme.typography.h4,
                     maxLines = 1,
@@ -65,8 +77,7 @@ fun HeroListItem(
                 )
                 Text(
                     modifier = Modifier
-                        .testTag(TAG_HERO_PRIMARY_ATTRIBUTE)
-                    ,
+                        .testTag(TAG_HERO_PRIMARY_ATTRIBUTE),
                     text = hero.primaryAttribute.uiValue,
                     style = MaterialTheme.typography.subtitle1,
                 )
@@ -74,17 +85,17 @@ fun HeroListItem(
             Column(
                 modifier = Modifier
                     .fillMaxWidth() // Fill the rest of the width (100% - 80% = 20%)
-                    .padding(end = 12.dp)
-                ,
+                    .padding(end = 12.dp),
                 horizontalAlignment = Alignment.End
             ) {
                 // Using remember in list item does not behave correctly?
 //                val proWR: Int = remember{round(hero.proWins.toDouble() / hero.proPick.toDouble() * 100).toInt()}
-                val proWR: Int = round(hero.proWins.toDouble() / hero.proPick.toDouble() * 100).toInt()
+                val proWR: Int =
+                    round(hero.proWins.toDouble() / hero.proPick.toDouble() * 100).toInt()
                 Text(
                     text = "${proWR}%",
                     style = MaterialTheme.typography.caption,
-                    color = if(proWR > 50) Color(0xFF009a34) else MaterialTheme.colors.error,
+                    color = if (proWR > 50) Color(0xFF009a34) else MaterialTheme.colors.error,
                 )
             }
         }
