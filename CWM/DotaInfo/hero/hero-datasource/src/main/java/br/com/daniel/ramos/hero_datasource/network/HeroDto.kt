@@ -154,7 +154,7 @@ data class HeroDto(
  * Kotlin Extension function
  * This will create a Hero object out of our HeroDto
  */
-fun HeroDto.toHero(): Hero {
+fun HeroDto.toHero(): Hero{
     return Hero(
         id = id,
         localizedName = localizedName,
