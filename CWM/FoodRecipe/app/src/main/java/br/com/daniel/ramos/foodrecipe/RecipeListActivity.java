@@ -43,7 +43,7 @@ public class RecipeListActivity extends BaseActivity {
     public void testRetrofitResponse() {
         RecipeApi recipeApi = ServiceGenerator.getRecipeApi();
 
-        Call<RecipeSearchResponse> responseCall = recipeApi.searchRecipe("chicken breast", "1");
+        Call<RecipeSearchResponse> responseCall = recipeApi.searchRecipe("chicken breast", 1);
 
         responseCall.enqueue(new Callback<RecipeSearchResponse>() {
             @Override

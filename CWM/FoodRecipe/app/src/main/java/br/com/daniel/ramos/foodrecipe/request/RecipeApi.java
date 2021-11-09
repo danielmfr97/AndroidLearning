@@ -15,7 +15,7 @@ public interface RecipeApi {
     @GET("api/v2/recipes")
     Call<RecipeSearchResponse> searchRecipe(
             @Query("q") String query,
-            @Query("page") String page
+            @Query("page") int page
     );
 
     // GET RECIPE
