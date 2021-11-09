@@ -19,7 +19,7 @@ public interface RecipeApi {
     );
 
     // GET RECIPE
-    @GET("api/v2/get")
+    @GET("api/get")
     Call<RecipeResponse> getRecipe(
             @Query("rId") String recipe_id
     );
