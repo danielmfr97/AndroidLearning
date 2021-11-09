@@ -1,15 +1,15 @@
 package br.com.daniel.ramos.foodrecipe.repositories;
 
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
 import br.com.daniel.ramos.foodrecipe.models.Recipe;
+import br.com.daniel.ramos.foodrecipe.request.RecipeApiClient;
 
 public class RecipeRepository {
     private static RecipeRepository instance;
-    private MutableLiveData<List<Recipe>> mRecipes;
-
+private RecipeApiClient mRecipeApiClient;
     public static RecipeRepository getInstance() {
         if (instance == null)
             instance = new RecipeRepository();
@@ -17,10 +17,10 @@ public class RecipeRepository {
     }
 
     private RecipeRepository() {
-        mRecipes = new MutableLiveData<>();
+        mRecipeApiClient = new RecipeApiClient();
     }
 
-    public MutableLiveData<List<Recipe>> getRecipes() {
-        return mRecipes;
+    public LiveData<List<Recipe>> getRecipes() {
+        return mRecipeApiClient.getRecipes();
     }
 }
