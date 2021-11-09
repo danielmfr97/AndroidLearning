@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +16,7 @@ import br.com.daniel.ramos.foodrecipe.request.RecipeApi;
 import br.com.daniel.ramos.foodrecipe.request.ServiceGenerator;
 import br.com.daniel.ramos.foodrecipe.request.responses.RecipeResponse;
 import br.com.daniel.ramos.foodrecipe.request.responses.RecipeSearchResponse;
+import br.com.daniel.ramos.foodrecipe.viewmodels.RecipeListViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,17 +24,19 @@ import retrofit2.Response;
 public class RecipeListActivity extends BaseActivity {
     private static final String TAG = "RecipeListActivity";
 
+    private RecipeListViewModel mRecipeListViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_list);
 
-        findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                testRetrofitResponse();
-                testRecipeResponse();
-            }
+        mRecipeListViewModel = new ViewModelProvider(this).get(RecipeListViewModel.class);
+    }
+
+    private void subscribeObservers() {
+        mRecipeListViewModel.getRecipes().observe(this, recipes -> {
+
         });
     }
 
@@ -93,4 +99,5 @@ public class RecipeListActivity extends BaseActivity {
             }
         });
     }
+
 }
