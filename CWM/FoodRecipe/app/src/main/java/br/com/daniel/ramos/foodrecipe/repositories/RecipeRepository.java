@@ -9,7 +9,8 @@ import br.com.daniel.ramos.foodrecipe.request.RecipeApiClient;
 
 public class RecipeRepository {
     private static RecipeRepository instance;
-private RecipeApiClient mRecipeApiClient;
+    private RecipeApiClient mRecipeApiClient;
+
     public static RecipeRepository getInstance() {
         if (instance == null)
             instance = new RecipeRepository();
@@ -22,5 +23,11 @@ private RecipeApiClient mRecipeApiClient;
 
     public LiveData<List<Recipe>> getRecipes() {
         return mRecipeApiClient.getRecipes();
+    }
+
+    public void searchRecipesApi(String query, int pageNumber) {
+        if (pageNumber == 0)
+            pageNumber = 1; // Fallback for error searching for page 0
+        mRecipeApiClient.searchRecipesApi(query, pageNumber);
     }
 }
