@@ -12,6 +12,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
         (
                 modules = {
                         AndroidSupportInjectionModule.class, //
+                        ActivityBuildersModule.class,
+
                 }
         )
 public interface AppComponent extends AndroidInjector<BaseApplication> /* Dizemos para o Dagger que esse o BaseApplication vai ser um cliente do AppComponent que seria um serviço, como EXEMPLO. */ {
