@@ -13,6 +13,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
                 modules = {
                         AndroidSupportInjectionModule.class, //
                         ActivityBuildersModule.class,
+                        AppModule.class,
 
                 }
         )
@@ -20,8 +21,7 @@ public interface AppComponent extends AndroidInjector<BaseApplication> /* Dizemo
 
     @Component.Builder
     interface Builder {
-        @BindsInstance
-            // Usamos para fazer um binding um objeto particular para um componente durante o tempo de construção.
+        @BindsInstance // Usamos para fazer um binding um objeto particular para um componente durante o tempo de construção.
         Builder application(Application application);
 
         AppComponent build();
