@@ -20,13 +20,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
+import br.com.daniel.ramos.learningjetpackcompose.domain.model.Recipe
+import br.com.daniel.ramos.learningjetpackcompose.network.model.RecipeNetworkEntity
+import br.com.daniel.ramos.learningjetpackcompose.network.model.RecipeNetworkMapper
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, RecipeListFragment())
-            .commit()
+
+        //How to use mapper
+        val mapper = RecipeNetworkMapper()
+        val recipe = Recipe()
+        val networkEntity: RecipeNetworkEntity = mapper.mapToEntity(recipe)
+        val r = mapper.mapFromEntity(networkEntity)
     }
 
     @OptIn(ExperimentalUnitApi::class)
