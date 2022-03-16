@@ -2,6 +2,7 @@ package br.com.daniel.ramos.learningjetpackcompose
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,19 +22,36 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import br.com.daniel.ramos.learningjetpackcompose.domain.model.Recipe
+import br.com.daniel.ramos.learningjetpackcompose.network.RecipeService
 import br.com.daniel.ramos.learningjetpackcompose.network.model.RecipeNetworkEntity
 import br.com.daniel.ramos.learningjetpackcompose.network.model.RecipeNetworkMapper
+import com.google.gson.GsonBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+private const val TAG = "MainActivity "
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //How to use mapper
-        val mapper = RecipeNetworkMapper()
-        val recipe = Recipe()
-        val networkEntity: RecipeNetworkEntity = mapper.mapToEntity(recipe)
-        val r = mapper.mapFromEntity(networkEntity)
+        val service = Retrofit.Builder()
+            .baseUrl("https://food2fork.ca/api/recipe/")
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+            .build()
+            .create(RecipeService::class.java)
+
+        CoroutineScope(IO).launch {
+            val response = service.get(
+                token = "Token 9c8b06d329136da358c2d00e76946b0111ce2c48",
+                583
+            )
+            Log.d(TAG, "onCreate: $response")
+        }
     }
 
     @OptIn(ExperimentalUnitApi::class)

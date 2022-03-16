@@ -6,10 +6,10 @@ data class RecipeNetworkEntity(
     @SerializedName("cooking_instructions")
     val cookingInstructions: String? = null,
 
-    @SerializedName("cooking_instructions")
+    @SerializedName("date_added")
     val dateAdded: String? = null,
 
-    @SerializedName("cooking_instructions")
+    @SerializedName("date_updated")
     val dateUpdated: String? = null,
 
     val description: String? = null,
@@ -18,10 +18,10 @@ data class RecipeNetworkEntity(
 
     val ingredients: List<String>? = null,
 
-    @SerializedName("cooking_instructions")
+    @SerializedName("long_date_added")
     val longDateAdded: Int? = null,
 
-    @SerializedName("cooking_instructions")
+    @SerializedName("long_date_updated")
     val longDateUpdated: Int? = null,
 
     val pk: Int? = null,
