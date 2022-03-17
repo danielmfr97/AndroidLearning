@@ -1,5 +1,6 @@
 package br.com.daniel.ramos.learningjetpackcompose.network
 
+import br.com.daniel.ramos.learningjetpackcompose.network.model.RecipeDto
 import br.com.daniel.ramos.learningjetpackcompose.network.response.RecipeSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -17,6 +18,6 @@ interface RecipeService {
     @GET("get")
     suspend fun get(
         @Header("Authorization") token: String,
-        @Query("id") id:Int,
-    ): RecipeSearchResponse
+        @Query("id") id: Int
+    ): RecipeDto
 }

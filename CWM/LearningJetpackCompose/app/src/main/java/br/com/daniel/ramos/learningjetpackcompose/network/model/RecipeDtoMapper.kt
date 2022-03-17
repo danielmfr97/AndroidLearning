@@ -3,7 +3,7 @@ package br.com.daniel.ramos.learningjetpackcompose.network.model
 import br.com.daniel.ramos.learningjetpackcompose.domain.model.Recipe
 import br.com.daniel.ramos.learningjetpackcompose.domain.util.DomainMapper
 
-class RecipeNetworkMapper : DomainMapper<RecipeDto, Recipe> {
+class RecipeDtoMapper : DomainMapper<RecipeDto, Recipe> {
     override fun mapToDomainModel(model: RecipeDto): Recipe {
         return Recipe(
             id = model.pk,
@@ -36,11 +36,11 @@ class RecipeNetworkMapper : DomainMapper<RecipeDto, Recipe> {
         )
     }
 
-    fun fromEntityList(initial: List<RecipeDto>) : List<Recipe> {
-        return initial.map{ mapToDomainModel(it)}
+    fun fromDomainList(initial: List<Recipe>) : List<RecipeDto> {
+        return initial.map{mapFromDomainModel(it)}
     }
 
-    fun toEntityList(initial: List<Recipe>): List<RecipeDto> {
-        return initial.map{mapFromDomainModel(it)}
+    fun toDomainList(initial: List<RecipeDto>): List<Recipe> {
+        return initial.map{mapToDomainModel(it)}
     }
 }
