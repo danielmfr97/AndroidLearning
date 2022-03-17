@@ -1,27 +1,27 @@
 package br.com.daniel.ramos.learningjetpackcompose.network.model
 
 import br.com.daniel.ramos.learningjetpackcompose.domain.model.Recipe
-import br.com.daniel.ramos.learningjetpackcompose.domain.util.EntityMapper
+import br.com.daniel.ramos.learningjetpackcompose.domain.util.DomainMapper
 
-class RecipeNetworkMapper : EntityMapper<RecipeNetworkEntity, Recipe> {
-    override fun mapFromEntity(entity: RecipeNetworkEntity): Recipe {
+class RecipeNetworkMapper : DomainMapper<RecipeDto, Recipe> {
+    override fun mapToDomainModel(model: RecipeDto): Recipe {
         return Recipe(
-            id = entity.pk,
-            title = entity.title,
-            featuredImage = entity.featuredImage,
-            publisher = entity.publisher,
-            rating = entity.rating,
-            sourceUrl = entity.sourceUrl,
-            description = entity.description,
-            cookingInstructions = entity.cookingInstructions,
-            ingredients = entity.ingredients,
-            dateAdded = entity.dateAdded,
-            dateUpdated = entity.dateUpdated
+            id = model.pk,
+            title = model.title,
+            featuredImage = model.featuredImage,
+            publisher = model.publisher,
+            rating = model.rating,
+            sourceUrl = model.sourceUrl,
+            description = model.description,
+            cookingInstructions = model.cookingInstructions,
+            ingredients = model.ingredients,
+            dateAdded = model.dateAdded,
+            dateUpdated = model.dateUpdated
         )
     }
 
-    override fun mapToEntity(domainModel: Recipe): RecipeNetworkEntity {
-        return RecipeNetworkEntity(
+    override fun mapFromDomainModel(domainModel: Recipe): RecipeDto {
+        return RecipeDto(
             pk = domainModel.id,
             title = domainModel.title,
             featuredImage = domainModel.featuredImage,
@@ -36,11 +36,11 @@ class RecipeNetworkMapper : EntityMapper<RecipeNetworkEntity, Recipe> {
         )
     }
 
-    fun fromEntityList(initial: List<RecipeNetworkEntity>) : List<Recipe> {
-        return initial.map{ mapFromEntity(it)}
+    fun fromEntityList(initial: List<RecipeDto>) : List<Recipe> {
+        return initial.map{ mapToDomainModel(it)}
     }
 
-    fun toEntityList(initial: List<Recipe>): List<RecipeNetworkEntity> {
-        return initial.map{mapToEntity(it)}
+    fun toEntityList(initial: List<Recipe>): List<RecipeDto> {
+        return initial.map{mapFromDomainModel(it)}
     }
 }
