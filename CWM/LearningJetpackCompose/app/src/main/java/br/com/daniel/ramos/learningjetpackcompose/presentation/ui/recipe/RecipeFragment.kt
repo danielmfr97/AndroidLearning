@@ -1,4 +1,4 @@
-package br.com.daniel.ramos.learningjetpackcompose
+package br.com.daniel.ramos.learningjetpackcompose.presentation.ui.recipe
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 
 class RecipeFragment : Fragment(){
 
