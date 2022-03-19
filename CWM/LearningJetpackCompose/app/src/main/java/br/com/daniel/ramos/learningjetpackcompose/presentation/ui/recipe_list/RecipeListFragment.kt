@@ -20,9 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import br.com.daniel.ramos.learningjetpackcompose.R
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class RecipeListFragment : Fragment() {
 
     private val viewModel: RecipeListViewModel by viewModels()
