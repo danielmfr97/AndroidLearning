@@ -8,12 +8,8 @@ import javax.inject.Named
 
 @HiltViewModel
 class RecipeListViewModel @Inject constructor(
-    private val randomString: String,
     private val repository: RecipeRepository,
     @Named("auth_token") private val token: String,
 ) : ViewModel() {
 
-    init {
-        println("VIEWMODEL: $randomString")
-    }
 }

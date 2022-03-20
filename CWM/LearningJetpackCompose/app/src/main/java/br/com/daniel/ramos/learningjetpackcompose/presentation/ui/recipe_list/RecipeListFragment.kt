@@ -20,7 +20,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import br.com.daniel.ramos.learningjetpackcompose.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeListFragment : Fragment() {
 
     private val viewModel: RecipeListViewModel by viewModels()
@@ -48,7 +50,7 @@ class RecipeListFragment : Fragment() {
                     Spacer(modifier = Modifier.padding(10.dp))
                     Button(
                         onClick = {
-                            findNavController().navigate(R.id.viewRecipe)
+                            findNavController().navigate(R.id.action_recipeListFragment_to_recipeFragment)
                         }
                     ) {
                         Text(text = "TO RECIPE FRAGMENT")

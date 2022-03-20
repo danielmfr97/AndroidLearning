@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_graph"
     app:startDestination="@id/recipeListFragment">
-
     <fragment
         android:id="@+id/recipeListFragment"
         android:name="br.com.daniel.ramos.learningjetpackcompose.presentation.ui.recipe_list.RecipeListFragment"
         android:label="RecipeListFragment" >
         <action
-            android:id="@+id/viewRecipe"
+            android:id="@+id/action_recipeListFragment_to_recipeFragment"
             app:destination="@id/recipeFragment" />
     </fragment>
     <fragment

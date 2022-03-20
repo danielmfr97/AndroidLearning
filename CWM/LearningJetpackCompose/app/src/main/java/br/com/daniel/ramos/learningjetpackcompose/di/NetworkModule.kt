@@ -28,7 +28,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofitService(): RecipeService {
         return Retrofit.Builder()
-            .baseUrl("htpps://food2fork.ca/api/recipe/")
+            .baseUrl("https://food2fork.ca/api/recipe/")
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()
             .create(RecipeService::class.java)
