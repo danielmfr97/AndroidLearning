@@ -1,6 +1,7 @@
 package br.com.daniel.ramos.learningjetpackcompose.presentation.ui.recipe_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import br.com.daniel.ramos.learningjetpackcompose.R
+import br.com.daniel.ramos.learningjetpackcompose.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,7 +31,6 @@ class RecipeListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        println("VIEWMODEL: ${viewModel}")
     }
 
     @ExperimentalUnitApi
@@ -38,6 +39,13 @@ class RecipeListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        val recipes = viewModel.recipes.value
+        
+        for (recipe in recipes) {
+            Log.d(TAG, "onCreateView: ${recipe.title}")
+        }
+
         return ComposeView(requireContext()).apply {
             setContent {
                 Column(modifier = Modifier.padding(16.dp)) {
