@@ -14,6 +14,7 @@ data class RecipeDto(
 
     val description: String? = null,
 
+    @SerializedName("featured_image")
     val featuredImage: String? = null,
 
     val ingredients: List<String>? = null,
