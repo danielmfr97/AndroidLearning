@@ -19,27 +19,26 @@ class RecipeListViewModel @Inject constructor(
     @Named("auth_token") private val token: String,
 ) : ViewModel() {
 
-//    private val _recipes: MutableLiveData<List<Recipe>> = MutableLiveData()
-//    val recipes: LiveData<List<Recipe>> get() = _recipes
-//
-//    init {
-//        viewModelScope.launch {
-//            val result = repository.search(token =  token, page = 1, query = "chicken",)
-//            _recipes.value = result
-//        }
-//    }
+    val recipes: MutableState<List<Recipe>> = mutableStateOf(ArrayList())
 
-    val recipes: MutableState<List<Recipe>> = mutableStateOf(listOf())
+    val query = mutableStateOf("")
 
     init {
-        newSearch()
+        newSearch(query.value)
     }
 
-    fun newSearch() {
+    fun newSearch(query: String){
         viewModelScope.launch {
-            val result = repository.search(token = token, page = 1, query = "chicken")
+            val result = repository.search(
+                token = token,
+                page = 1,
+                query = query
+            )
             recipes.value = result
         }
     }
 
+    fun onQueryChanged(query: String){
+        this.query.value = query
+    }
 }
