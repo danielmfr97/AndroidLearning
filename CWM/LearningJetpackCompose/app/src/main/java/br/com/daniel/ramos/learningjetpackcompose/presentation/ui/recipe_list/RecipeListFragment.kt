@@ -4,16 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,6 +29,7 @@ import androidx.fragment.app.viewModels
 import br.com.daniel.ramos.learningjetpackcompose.presentation.components.FoodCategoryChip
 import br.com.daniel.ramos.learningjetpackcompose.presentation.components.RecipeCard
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RecipeListFragment : Fragment() {
@@ -59,7 +60,7 @@ class RecipeListFragment : Fragment() {
                         color = Color.White,
                         elevation = 8.dp
                     ) {
-                        Column() {
+                        Column {
                             Row(modifier = Modifier.fillMaxWidth()) {
                                 TextField(
                                     modifier = Modifier
@@ -88,22 +89,36 @@ class RecipeListFragment : Fragment() {
                                     colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.surface)
                                 )
                             }
+                            val lazyListState = rememberLazyListState()
+                            val coroutineScope = rememberCoroutineScope()
                             LazyRow(
-                                modifier = Modifier.fillMaxWidth().padding(start = 8.dp, bottom = 8.dp),
+                                state = lazyListState,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 8.dp, bottom = 8.dp),
+
                                 content = {
-                                items(getAllFoodCategories()) { category ->
-                                    FoodCategoryChip(
-                                        category = category.value,
-                                        isSelected = selectedCategory == category,
-                                        onSelectedCategoryChanged = {
-                                            viewModel.onSelectedCategoryChanged(it)
-                                        },
-                                        onExecuteSearch = {
-                                            viewModel::newSearch
-                                        }
-                                    )
-                                }
-                            })
+                                    coroutineScope.launch {
+                                        lazyListState.scrollToItem(
+                                            viewModel.categoryScrollPosition,
+                                            viewModel.categoryScrollOffSetPosition
+                                        )
+                                    }
+                                    items(getAllFoodCategories()) { category ->
+                                        FoodCategoryChip(
+                                            category = category.value,
+                                            isSelected = selectedCategory == category,
+                                            onSelectedCategoryChanged = {
+                                                viewModel.onSelectedCategoryChanged(it)
+                                                viewModel.categoryScrollPosition =
+                                                    lazyListState.firstVisibleItemIndex
+                                                viewModel.categoryScrollOffSetPosition =
+                                                    lazyListState.firstVisibleItemScrollOffset
+                                            },
+                                            onExecuteSearch = viewModel::newSearch
+                                        )
+                                    }
+                                })
                         }
                     }
                     LazyColumn {
