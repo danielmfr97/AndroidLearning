@@ -51,6 +51,7 @@ class RecipeListFragment : Fragment() {
                 val focusManager = LocalFocusManager.current
                 val recipes = viewModel.recipes.value
                 val query = viewModel.query.value
+                val selectedCategory = viewModel.selectedCategory.value
 
                 Column {
                     Surface(
@@ -77,8 +78,8 @@ class RecipeListFragment : Fragment() {
                                         autoCorrect = true,
                                     ),
                                     keyboardActions = KeyboardActions(onDone = {
+                                        viewModel.newSearch()
                                         focusManager.clearFocus()
-                                        viewModel.newSearch(query)
                                     }),
                                     leadingIcon = {
                                         Icon(Icons.Filled.Search, "")
@@ -87,13 +88,18 @@ class RecipeListFragment : Fragment() {
                                     colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.surface)
                                 )
                             }
-                            LazyRow(content = {
+                            LazyRow(
+                                modifier = Modifier.fillMaxWidth().padding(start = 8.dp, bottom = 8.dp),
+                                content = {
                                 items(getAllFoodCategories()) { category ->
                                     FoodCategoryChip(
                                         category = category.value,
+                                        isSelected = selectedCategory == category,
+                                        onSelectedCategoryChanged = {
+                                            viewModel.onSelectedCategoryChanged(it)
+                                        },
                                         onExecuteSearch = {
-                                            viewModel.onQueryChanged(it)
-                                            viewModel.newSearch(it)
+                                            viewModel::newSearch
                                         }
                                     )
                                 }
