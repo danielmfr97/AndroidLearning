@@ -56,4 +56,8 @@ class RecipeListViewModel @Inject constructor(
     fun onChangeCategoryScrollPosition(position: Int) {
        categoryScrollPosition = position
     }
+
+    fun onChangeCategoryScrollOffSetPosition(position: Int) {
+        categoryScrollOffSetPosition = position
+    }
 }
