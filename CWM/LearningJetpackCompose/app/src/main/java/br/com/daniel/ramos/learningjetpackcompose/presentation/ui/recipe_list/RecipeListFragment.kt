@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import br.com.daniel.ramos.learningjetpackcompose.presentation.components.CircularIndeterminateProgressBar
 import br.com.daniel.ramos.learningjetpackcompose.presentation.components.FoodCategoryChip
 import br.com.daniel.ramos.learningjetpackcompose.presentation.components.RecipeCard
 import br.com.daniel.ramos.learningjetpackcompose.presentation.components.SearchAppBar
@@ -54,6 +55,7 @@ class RecipeListFragment : Fragment() {
                 val recipes = viewModel.recipes.value
                 val query = viewModel.query.value
                 val selectedCategory = viewModel.selectedCategory.value
+                val loading = viewModel.loading.value
 
                 Column {
                     SearchAppBar(
@@ -68,12 +70,15 @@ class RecipeListFragment : Fragment() {
                         onChangeCategoryScrollPosition = viewModel::onChangeCategoryScrollPosition,
                         onChangeCategoryScrollOffSetPosition = viewModel::onChangeCategoryScrollOffSetPosition
                     )
-                    LazyColumn {
-                        itemsIndexed(
-                            items = recipes
-                        ) { index, recipe ->
-                            RecipeCard(recipe = recipe, onClick = {})
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        LazyColumn {
+                            itemsIndexed(
+                                items = recipes
+                            ) { index, recipe ->
+                                RecipeCard(recipe = recipe, onClick = {})
+                            }
                         }
+                        CircularIndeterminateProgressBar(isDisplayed = loading)
                     }
                 }
             }

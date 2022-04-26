@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.daniel.ramos.learningjetpackcompose.domain.model.Recipe
 import br.com.daniel.ramos.learningjetpackcompose.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
@@ -25,6 +26,8 @@ class RecipeListViewModel @Inject constructor(
 
     val selectedCategory: MutableState<FoodCategory?> = mutableStateOf(null)
 
+    val loading = mutableStateOf(false)
+
     var categoryScrollPosition: Int = 0
     var categoryScrollOffSetPosition: Int = 0
 
@@ -32,29 +35,44 @@ class RecipeListViewModel @Inject constructor(
         newSearch()
     }
 
-    fun newSearch(){
+    fun newSearch() {
         viewModelScope.launch {
+            loading.value = true
+            resetSearchState()
+            delay(2000) // Simulando um delay na rede
             val result = repository.search(
                 token = token,
                 page = 1,
                 query = query.value
             )
             recipes.value = result
+
+            loading.value = false
         }
     }
 
-    fun onQueryChanged(query: String){
+    private fun resetSearchState() {
+        recipes.value = listOf()
+        if (selectedCategory.value?.value != query.value)
+            clearSelectedCategory()
+    }
+
+    private fun clearSelectedCategory() {
+        selectedCategory.value = null
+    }
+
+    fun onQueryChanged(query: String) {
         this.query.value = query
     }
 
-    fun onSelectedCategoryChanged(category: String){
+    fun onSelectedCategoryChanged(category: String) {
         val newCategory = getFoodCategory(category)
         selectedCategory.value = newCategory
         onQueryChanged(category)
     }
 
     fun onChangeCategoryScrollPosition(position: Int) {
-       categoryScrollPosition = position
+        categoryScrollPosition = position
     }
 
     fun onChangeCategoryScrollOffSetPosition(position: Int) {
