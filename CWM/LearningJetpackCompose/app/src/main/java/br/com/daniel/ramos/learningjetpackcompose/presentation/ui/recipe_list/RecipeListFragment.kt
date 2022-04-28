@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -17,7 +18,10 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import br.com.daniel.ramos.learningjetpackcompose.presentation.components.*
+import br.com.daniel.ramos.learningjetpackcompose.presentation.components.CircularIndeterminateProgressBar
+import br.com.daniel.ramos.learningjetpackcompose.presentation.components.RecipeCard
+import br.com.daniel.ramos.learningjetpackcompose.presentation.components.SearchAppBar
+import br.com.daniel.ramos.learningjetpackcompose.presentation.components.ShimmerRecipeCardItem
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,7 +61,12 @@ class RecipeListFragment : Fragment() {
                         onChangeCategoryScrollPosition = viewModel::onChangeCategoryScrollPosition,
                         onChangeCategoryScrollOffSetPosition = viewModel::onChangeCategoryScrollOffSetPosition
                     )
-                    Row(modifier = Modifier.fillMaxWidth().height(200.dp), horizontalArrangement = Arrangement.Center) {
+                    /*
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp), horizontalArrangement = Arrangement.Center
+                    ) {
                         val state = remember { mutableStateOf(HeartButtonState.IDLE) }
                         AnimatedHeartButton(
                             modifier = Modifier,
@@ -66,16 +75,25 @@ class RecipeListFragment : Fragment() {
                                 state.value =
                                     if (state.value == HeartButtonState.IDLE) HeartButtonState.ACTIVE else HeartButtonState.IDLE
                             })
-                    }
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        LazyColumn {
-                            itemsIndexed(
-                                items = recipes
-                            ) { index, recipe ->
-                                RecipeCard(recipe = recipe, onClick = {})
+                    }*/
+
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        if (loading) {
+                            ShimmerRecipeCardItem(
+                                imageHeight = 250.dp, padding = 8.dp
+                            )
+                        } else {
+                            LazyColumn(modifier = Modifier.padding(8.dp)) {
+                                itemsIndexed(
+                                    items = recipes
+                                ) { index, recipe ->
+                                    RecipeCard(recipe = recipe, onClick = {})
+                                }
                             }
+                            CircularIndeterminateProgressBar(isDisplayed = loading)
                         }
-                        CircularIndeterminateProgressBar(isDisplayed = loading)
                     }
                 }
             }
