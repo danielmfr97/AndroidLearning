@@ -1,7 +1,7 @@
 package br.com.daniel.ramos.learningjetpackcompose.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import br.com.daniel.ramos.learningjetpackcompose.R
 import dagger.hilt.android.AndroidEntryPoint
 

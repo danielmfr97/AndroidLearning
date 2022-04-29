@@ -18,7 +18,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -71,7 +70,7 @@ fun SearchAppBar(
                     leadingIcon = {
                         Icon(Icons.Filled.Search, "")
                     },
-                    textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
+                    textStyle = MaterialTheme.typography.button,
                     colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.surface)
                 )
                 ConstraintLayout(modifier = Modifier.align(Alignment.CenterVertically)) {
