@@ -6,17 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.MaterialTheme
-import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.material.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -36,13 +34,8 @@ class RecipeListFragment : Fragment() {
     lateinit var application: BaseApplication
     private val viewModel: RecipeListViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
-    @OptIn(ExperimentalComposeUiApi::class)
-    @ExperimentalUnitApi
-    override fun onCreateView(
+     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,40 +50,31 @@ class RecipeListFragment : Fragment() {
                     val selectedCategory = viewModel.selectedCategory.value
                     val loading = viewModel.loading.value
 
-                    Column(modifier = Modifier.background(color = MaterialTheme.colors.surface)) {
-                        SearchAppBar(
-                            focusManager = focusManager,
-                            query = query,
-                            onQueryChange = viewModel::onQueryChanged,
-                            onExecuteSearch = viewModel::newSearch,
-                            categoryScrollPosition = viewModel.categoryScrollPosition,
-                            categoryScrollOffSetPosition = viewModel.categoryScrollOffSetPosition,
-                            selectedCategory = selectedCategory,
-                            onSelectedCategoryChange = viewModel::onSelectedCategoryChanged,
-                            onChangeCategoryScrollPosition = viewModel::onChangeCategoryScrollPosition,
-                            onChangeCategoryScrollOffSetPosition = viewModel::onChangeCategoryScrollOffSetPosition,
-                            onToggleTheme = {
-                                application.toogleLightTheme()
-                            }
-                        )
-                        /*
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(200.dp), horizontalArrangement = Arrangement.Center
-                        ) {
-                            val state = remember { mutableStateOf(HeartButtonState.IDLE) }
-                            AnimatedHeartButton(
-                                modifier = Modifier,
-                                buttonState = state,
-                                onToggle = {
-                                    state.value =
-                                        if (state.value == HeartButtonState.IDLE) HeartButtonState.ACTIVE else HeartButtonState.IDLE
-                                })
-                        }*/
-
+                    Scaffold(
+                        topBar = {
+                            SearchAppBar(
+                                focusManager = focusManager,
+                                query = query,
+                                onQueryChange = viewModel::onQueryChanged,
+                                onExecuteSearch = viewModel::newSearch,
+                                categoryScrollPosition = viewModel.categoryScrollPosition,
+                                categoryScrollOffSetPosition = viewModel.categoryScrollOffSetPosition,
+                                selectedCategory = selectedCategory,
+                                onSelectedCategoryChange = viewModel::onSelectedCategoryChanged,
+                                onChangeCategoryScrollPosition = viewModel::onChangeCategoryScrollPosition,
+                                onChangeCategoryScrollOffSetPosition = viewModel::onChangeCategoryScrollOffSetPosition,
+                                onToggleTheme = {
+                                    application.toogleLightTheme()
+                                }
+                            )
+                        },
+                        bottomBar = {},
+                        drawerContent = {},
+                    ) {
                         Box(
-                            modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colors.background )
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(color = MaterialTheme.colors.surface)
                         ) {
                             if (loading) {
                                 ShimmerRecipeCardItem(
