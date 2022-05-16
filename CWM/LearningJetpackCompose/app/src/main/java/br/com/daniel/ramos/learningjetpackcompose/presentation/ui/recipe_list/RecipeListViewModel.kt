@@ -1,5 +1,6 @@
 package br.com.daniel.ramos.learningjetpackcompose.presentation.ui.recipe_list
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 const val PAGE_SIZE = 30
+private const val TAG = "RecipeListViewModel"
 
 @HiltViewModel
 class RecipeListViewModel @Inject constructor(
@@ -37,40 +39,54 @@ class RecipeListViewModel @Inject constructor(
     var categoryScrollOffSetPosition: Int = 0
 
     init {
-        newSearch()
+        onTriggerEvent(RecipeListEvent.NewSearchEvent)
     }
 
-    fun newSearch() {
+    fun onTriggerEvent(event: RecipeListEvent) {
         viewModelScope.launch {
-            loading.value = true
-            resetSearchState()
-            delay(2000) // Simulando um delay na rede
-            val result = repository.search(
-                token = token,
-                page = 1,
-                query = query.value
-            )
-            recipes.value = result
-
-            loading.value = false
+            try {
+                when (event) {
+                    is RecipeListEvent.NewSearchEvent -> {
+                        newSearch()
+                    }
+                    is RecipeListEvent.NextPageEvent -> {
+                        nextPage()
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "onTriggerEvent: Exception: ${e}, ${e.cause}")
+            }
         }
     }
 
-    fun nextPage() {
-        viewModelScope.launch {
-            // Prevent duplicate events due to recompose happening to quickly
-            if ((recipeListScrollPosition + 1) >= (page.value * PAGE_SIZE)) {
-                loading.value = true
-                incrementPage()
+    private suspend fun newSearch() {
+        loading.value = true
+        resetSearchState()
+        delay(2000) // Simulando um delay na rede
+        val result = repository.search(
+            token = token,
+            page = 1,
+            query = query.value
+        )
+        recipes.value = result
 
-                delay(1000) //Just to show how fast pagination api is
+        loading.value = false
+    }
 
-                if (page.value > 1) {
-                    val result = repository.search(token = token, page = page.value, query = query.value)
-                    appendRecipes(result)
-                }
-                loading.value = false
+    private suspend fun nextPage() {
+        // Prevent duplicate events due to recompose happening to quickly
+        if ((recipeListScrollPosition + 1) >= (page.value * PAGE_SIZE)) {
+            loading.value = true
+            incrementPage()
+
+            delay(1000) //Just to show how fast pagination api is
+
+            if (page.value > 1) {
+                val result =
+                    repository.search(token = token, page = page.value, query = query.value)
+                appendRecipes(result)
             }
+            loading.value = false
         }
     }
 

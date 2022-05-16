@@ -69,7 +69,20 @@ class RecipeListFragment : Fragment() {
                                 focusManager = focusManager,
                                 query = query,
                                 onQueryChange = viewModel::onQueryChanged,
-                                onExecuteSearch = viewModel::newSearch,
+                                onExecuteSearch =  {
+                                    if (viewModel.selectedCategory.value?.value == "Milk"){
+                                        snackbarController.getScope().launch {
+                                            snackbarController.showSnackbar(
+                                                scaffoldState = scaffoldState,
+                                                message = "Invalid category: MILK",
+                                                actionLabel = "Hide"
+                                            )
+                                        }
+                                    }
+                                    else{
+                                        viewModel.onTriggerEvent(RecipeListEvent.NewSearchEvent)
+                                    }
+                                },
                                 categoryScrollPosition = viewModel.categoryScrollPosition,
                                 categoryScrollOffSetPosition = viewModel.categoryScrollOffSetPosition,
                                 selectedCategory = selectedCategory,
@@ -108,7 +121,7 @@ class RecipeListFragment : Fragment() {
                                     ) { index, recipe ->
                                         viewModel.onChangeRecipeScrollPosition(index)
                                         if ((index + 1) >= (page * PAGE_SIZE)) {
-                                            viewModel.nextPage()
+                                            viewModel.onTriggerEvent(RecipeListEvent.NextPageEvent)
                                         }
                                         RecipeCard(recipe = recipe, onClick = {})
                                     }
