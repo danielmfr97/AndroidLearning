@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.daniel.ramos.learningjetpackcompose.domain.model.Recipe
 import br.com.daniel.ramos.learningjetpackcompose.repository.RecipeRepository
-import dagger.assisted.Assisted
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -26,7 +25,7 @@ const val  STATE_KEY_SELECTED_CATEGORY = "recipe.state.query.selected_category"
 class RecipeListViewModel @Inject constructor(
     private val repository: RecipeRepository,
     @Named("auth_token") private val token: String,
-    @Assisted private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     val recipes: MutableState<List<Recipe>> = mutableStateOf(ArrayList())

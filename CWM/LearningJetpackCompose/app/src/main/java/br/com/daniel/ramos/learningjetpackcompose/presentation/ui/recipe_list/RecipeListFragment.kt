@@ -4,34 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import br.com.daniel.ramos.learningjetpackcompose.presentation.BaseApplication
-import br.com.daniel.ramos.learningjetpackcompose.presentation.components.CircularIndeterminateProgressBar
-import br.com.daniel.ramos.learningjetpackcompose.presentation.components.RecipeCard
+import br.com.daniel.ramos.learningjetpackcompose.presentation.components.RecipeList
 import br.com.daniel.ramos.learningjetpackcompose.presentation.components.SearchAppBar
-import br.com.daniel.ramos.learningjetpackcompose.presentation.components.ShimmerRecipeCardItem
 import br.com.daniel.ramos.learningjetpackcompose.presentation.theme.AppTheme
 import br.com.daniel.ramos.learningjetpackcompose.presentation.util.SnackbarController
 import dagger.hilt.android.AndroidEntryPoint
@@ -101,42 +93,18 @@ class RecipeListFragment : Fragment() {
                             scaffoldState.snackbarHostState
                         }
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(color = MaterialTheme.colors.surface)
-                        ) {
-                            if (loading && recipes.isEmpty()) {
-                                ShimmerRecipeCardItem(
-                                    imageHeight = 250.dp, padding = 8.dp
-                                )
-                            } else {
-                                LazyColumn(
-                                    modifier = Modifier.padding(
-                                        8.dp
-                                    )
-                                ) {
-                                    itemsIndexed(
-                                        items = recipes
-                                    ) { index, recipe ->
-                                        viewModel.onChangeRecipeScrollPosition(index)
-                                        if ((index + 1) >= (page * PAGE_SIZE)) {
-                                            viewModel.onTriggerEvent(RecipeListEvent.NextPageEvent)
-                                        }
-                                        RecipeCard(recipe = recipe, onClick = {})
-                                    }
-                                }
-                                CircularIndeterminateProgressBar(isDisplayed = loading)
-                                DefaultSnackbar(
-                                    snackbarHostState = scaffoldState.snackbarHostState,
-                                    modifier = Modifier.align(
-                                        Alignment.BottomCenter
-                                    )
-                                ) {
-                                    scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                                }
-                            }
-                        }
+                        RecipeList(
+                            loading = loading,
+                            recipes = recipes,
+                            onChangeRecipeScrollPosition = viewModel::onChangeRecipeScrollPosition,
+                            page = page,
+                            onTriggerEvent = {
+                                             viewModel.onTriggerEvent(RecipeListEvent.NextPageEvent)
+                            },
+                            scaffoldState = scaffoldState,
+                            snackbarController = snackbarController,
+                            navController = findNavController()
+                        )
                     }
                 }
             }
