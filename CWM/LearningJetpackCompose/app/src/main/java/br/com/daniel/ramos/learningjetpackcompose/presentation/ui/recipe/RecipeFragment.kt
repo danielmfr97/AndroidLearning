@@ -4,22 +4,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.ExperimentalUnitApi
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import br.com.daniel.ramos.learningjetpackcompose.presentation.BaseApplication
+import br.com.daniel.ramos.learningjetpackcompose.presentation.components.CircularIndeterminateProgressBar
+import br.com.daniel.ramos.learningjetpackcompose.presentation.components.LoadingRecipeShimmer
+import br.com.daniel.ramos.learningjetpackcompose.presentation.components.RecipeView
+import br.com.daniel.ramos.learningjetpackcompose.presentation.theme.AppTheme
+import br.com.daniel.ramos.learningjetpackcompose.presentation.ui.recipe_list.DefaultSnackbar
+import br.com.daniel.ramos.learningjetpackcompose.presentation.util.SnackbarController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+const val IMAGE_HEIGHT = 260
 
 @AndroidEntryPoint
 class RecipeFragment : Fragment(){
+    @Inject
+    lateinit var application: BaseApplication
+
+    private val snackbarController = SnackbarController(lifecycleScope)
+
     private val viewModel: RecipeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,13 +58,47 @@ class RecipeFragment : Fragment(){
 
                 val recipe = viewModel.recipe.value
 
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = recipe?.let { recipe -> "Selected recipeId: ${recipe.id}" }?: "LOADING...",
-                        style = TextStyle(
-                            fontSize = TextUnit(21f, TextUnitType.Sp)
-                        )
-                    )
+                val scaffoldState = rememberScaffoldState()
+
+                AppTheme(
+                    darkTheme = application.isDark.value,
+                ){
+                    Scaffold(
+                        scaffoldState = scaffoldState,
+                        snackbarHost = {
+                            scaffoldState.snackbarHostState
+                        }
+                    ) {
+                        Box (
+                            modifier = Modifier.fillMaxSize()
+                        ){
+                            if (loading && recipe == null) LoadingRecipeShimmer(imageHeight = IMAGE_HEIGHT.dp)
+                            else recipe?.let {
+                                if(it.id == 1) {
+                                    snackbarController.getScope().launch {
+                                        snackbarController.showSnackbar(
+                                            scaffoldState = scaffoldState,
+                                            message = "An error occurred with this recipe",
+                                            actionLabel = "Ok"
+                                        )
+                                    }
+                                }
+                                else{
+                                    RecipeView(
+                                        recipe = it,
+                                    )
+                                }
+                            }
+                            CircularIndeterminateProgressBar(isDisplayed = loading)
+                            DefaultSnackbar(
+                                snackbarHostState = scaffoldState.snackbarHostState,
+                                onDismiss = {
+                                    scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                                },
+                                modifier = Modifier.align(Alignment.BottomCenter)
+                            )
+                        }
+                    }
                 }
             }
         }
