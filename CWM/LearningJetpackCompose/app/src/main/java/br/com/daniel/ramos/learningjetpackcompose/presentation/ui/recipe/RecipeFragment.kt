@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.ExperimentalUnitApi
@@ -17,11 +16,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import br.com.daniel.ramos.learningjetpackcompose.presentation.BaseApplication
-import br.com.daniel.ramos.learningjetpackcompose.presentation.components.CircularIndeterminateProgressBar
 import br.com.daniel.ramos.learningjetpackcompose.presentation.components.LoadingRecipeShimmer
 import br.com.daniel.ramos.learningjetpackcompose.presentation.components.RecipeView
 import br.com.daniel.ramos.learningjetpackcompose.presentation.theme.AppTheme
-import br.com.daniel.ramos.learningjetpackcompose.presentation.ui.recipe_list.DefaultSnackbar
 import br.com.daniel.ramos.learningjetpackcompose.presentation.util.SnackbarController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -62,6 +59,8 @@ class RecipeFragment : Fragment(){
 
                 AppTheme(
                     darkTheme = application.isDark.value,
+                    displayProgressBar = loading,
+                    scaffoldState = scaffoldState
                 ){
                     Scaffold(
                         scaffoldState = scaffoldState,
@@ -89,14 +88,6 @@ class RecipeFragment : Fragment(){
                                     )
                                 }
                             }
-                            CircularIndeterminateProgressBar(isDisplayed = loading)
-                            DefaultSnackbar(
-                                snackbarHostState = scaffoldState.snackbarHostState,
-                                onDismiss = {
-                                    scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                                },
-                                modifier = Modifier.align(Alignment.BottomCenter)
-                            )
                         }
                     }
                 }

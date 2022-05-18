@@ -46,23 +46,27 @@ class RecipeListFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                AppTheme(darkTheme = application.isDark.value) {
-                    val focusManager = LocalFocusManager.current
-                    val recipes = viewModel.recipes.value
-                    val query = viewModel.query.value
-                    val selectedCategory = viewModel.selectedCategory.value
-                    val loading = viewModel.loading.value
-                    val page = viewModel.page.value
-                    val scaffoldState = rememberScaffoldState()
+                val focusManager = LocalFocusManager.current
+                val recipes = viewModel.recipes.value
+                val query = viewModel.query.value
+                val selectedCategory = viewModel.selectedCategory.value
+                val loading = viewModel.loading.value
+                val page = viewModel.page.value
+                val scaffoldState = rememberScaffoldState()
 
+                AppTheme(
+                    darkTheme = application.isDark.value,
+                    displayProgressBar = loading,
+                    scaffoldState = scaffoldState
+                ) {
                     Scaffold(
                         topBar = {
                             SearchAppBar(
                                 focusManager = focusManager,
                                 query = query,
                                 onQueryChange = viewModel::onQueryChanged,
-                                onExecuteSearch =  {
-                                    if (viewModel.selectedCategory.value?.value == "Milk"){
+                                onExecuteSearch = {
+                                    if (viewModel.selectedCategory.value?.value == "Milk") {
                                         snackbarController.getScope().launch {
                                             snackbarController.showSnackbar(
                                                 scaffoldState = scaffoldState,
@@ -70,8 +74,7 @@ class RecipeListFragment : Fragment() {
                                                 actionLabel = "Hide"
                                             )
                                         }
-                                    }
-                                    else{
+                                    } else {
                                         viewModel.onTriggerEvent(RecipeListEvent.NewSearchEvent)
                                     }
                                 },
@@ -99,7 +102,7 @@ class RecipeListFragment : Fragment() {
                             onChangeRecipeScrollPosition = viewModel::onChangeRecipeScrollPosition,
                             page = page,
                             onTriggerEvent = {
-                                             viewModel.onTriggerEvent(RecipeListEvent.NextPageEvent)
+                                viewModel.onTriggerEvent(RecipeListEvent.NextPageEvent)
                             },
                             scaffoldState = scaffoldState,
                             snackbarController = snackbarController,
