@@ -13,16 +13,13 @@
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            app:destination="@id/ImageSwapFragment">
+        </action>
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
+        android:id="@+id/ImageSwapFragment"
         android:name="br.com.daniel.ramos.acompanhamentoodonto.ImageSwapFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_image_swap">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>

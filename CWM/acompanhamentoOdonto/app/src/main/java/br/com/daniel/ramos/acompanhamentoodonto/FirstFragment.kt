@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import br.com.daniel.ramos.acompanhamentoodonto.databinding.FragmentFirstBinding
 
@@ -53,6 +54,8 @@ class FirstFragment : Fragment(), View.OnClickListener {
             binding.cvDestque -> argument_bundle = "destaque_screen"
         }
         //TODO: Redirecionar para segunda tela com bundle
+        val bundle = bundleOf("screen_type" to argument_bundle)
+        findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
     }
 
     override fun onDestroyView() {
