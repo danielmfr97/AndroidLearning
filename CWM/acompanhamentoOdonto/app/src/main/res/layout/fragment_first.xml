@@ -241,7 +241,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <ImageView
         android:id="@+id/ivUFPA"
@@ -250,9 +250,9 @@
         app:layout_constraintEnd_toStartOf="@id/ivInstituto"
         app:layout_constraintTop_toBottomOf="@id/guidelineHorizontalMain"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:padding="10dp"
-        android:src="@drawable/ic_groups_black_24dp" />
+        android:src="@drawable/ufpa_img" />
 
     <ImageView
         android:id="@+id/ivInstituto"
@@ -261,7 +261,7 @@
         app:layout_constraintTop_toBottomOf="@id/guidelineHorizontalMain"
         app:layout_constraintStart_toEndOf="@id/ivUFPA"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:padding="10dp"
-        android:src="@drawable/ic_groups_black_24dp" />
+        android:src="@drawable/odonto_simbolo_belem" />
 </androidx.constraintlayout.widget.ConstraintLayout>
