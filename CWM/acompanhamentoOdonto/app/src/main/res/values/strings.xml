@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">acompanhamentoOdonto</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="cartilha_title">Cartilha</string>
+    <string name="quiz_title">Quiz</string>
+    <string name="destaque_title">Destaque</string>
+    <string name="covid_title">Covid-19</string>
+    <string name="agosto_dourado_title">Agosto Dourado</string>
+    <string name="quem_somos_title">Quem Somos</string>
+</resources>
