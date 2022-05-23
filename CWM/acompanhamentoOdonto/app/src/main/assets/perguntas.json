@@ -1,0 +1,22 @@
+[
+  {
+    "pergunta": "Pergunta 01",
+    "resposta": true
+  },
+  {
+    "pergunta": "Pergunta 02",
+    "resposta": false
+  },
+  {
+    "pergunta": "Pergunta 03",
+    "resposta": false
+  },
+  {
+    "pergunta": "Pergunta 04",
+    "resposta": false
+  },
+  {
+    "pergunta": "Pergunta 05",
+    "resposta": false
+  }
+]

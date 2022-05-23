@@ -15,6 +15,9 @@
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/ImageSwapFragment">
         </action>
+        <action
+            android:id="@+id/action_FirstFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
     </fragment>
     <fragment
         android:id="@+id/ImageSwapFragment"
@@ -22,4 +25,9 @@
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_image_swap">
     </fragment>
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="br.com.daniel.ramos.acompanhamentoodonto.QuizFragment"
+        android:label="fragment_quiz"
+        tools:layout="@layout/fragment_quiz" />
 </navigation>

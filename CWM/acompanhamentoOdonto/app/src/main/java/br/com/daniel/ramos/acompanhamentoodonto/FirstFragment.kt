@@ -44,18 +44,20 @@ class FirstFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
-        lateinit var argument_bundle: String
+        var argument_bundle: String? = null
         when (view) {
             binding.cvCartilha -> argument_bundle = "cartilha_screen"
             binding.cvCovid -> argument_bundle = "covid_screen"
             binding.cvAgostoDourado -> argument_bundle = "agosto_screen"
             binding.cvQuem -> argument_bundle = "quem_screen"
-            binding.cvQuiz -> argument_bundle = "quiz_screen"
             binding.cvDestque -> argument_bundle = "destaque_screen"
         }
-        //TODO: Redirecionar para segunda tela com bundle
-        val bundle = bundleOf("screen_type" to argument_bundle)
-        findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
+        if (!argument_bundle.isNullOrEmpty()) {
+            val bundle = bundleOf("screen_type" to argument_bundle)
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
+        } else {
+            findNavController().navigate(R.id.action_FirstFragment_to_quizFragment)
+        }
     }
 
     override fun onDestroyView() {

@@ -15,4 +15,11 @@
     <string name="covid_title">Covid-19</string>
     <string name="agosto_dourado_title">Agosto Dourado</string>
     <string name="quem_somos_title">Quem Somos</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_mostrar_perguntas">Mostrar todas</string>
+    <string name="verdadeiro">Verdadeiro</string>
+    <string name="falso">Falso</string>
+    <string name="exemplo_pergunta">A envergadura de uma asa de um Boeing 747 é maior que o primeiro voo dos irmãos Wright</string>
+    <string name="exemplo_pergunta2">Boeing 747 é uma aeronave a jato usada no âmbito civil e militar para transporte de passageiros e de carga, referida com frequência como Jumbo Jet ou Queen of the Skies (Rainha dos Céus). A sua corcunda na parte superior frontal da fuselagem faz com que seja uma das aeronaves mais reconhecíveis do mundo</string>
 </resources>
