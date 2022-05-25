@@ -5,15 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import br.com.daniel.ramos.acompanhamentoodonto.data.PerguntaDTO
+import br.com.daniel.ramos.acompanhamentoodonto.model.data.PerguntaDTO
 import br.com.daniel.ramos.acompanhamentoodonto.databinding.FragmentQuizBinding
 import br.com.daniel.ramos.acompanhamentoodonto.presenter.dialogs.DialogAcertoErro
 import br.com.daniel.ramos.acompanhamentoodonto.presenter.listeners.OnNextQuestiob
 import br.com.daniel.ramos.acompanhamentoodonto.utils.JsonUtils.getJsonDataFromAsset
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
 
 class QuizFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentQuizBinding? = null

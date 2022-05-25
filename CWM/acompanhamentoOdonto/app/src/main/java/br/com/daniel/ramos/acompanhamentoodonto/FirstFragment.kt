@@ -56,7 +56,7 @@ class FirstFragment : Fragment(), View.OnClickListener {
             val bundle = bundleOf("screen_type" to argument_bundle)
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
         } else {
-            findNavController().navigate(R.id.action_FirstFragment_to_quizFragment)
+            findNavController().navigate(R.id.action_FirstFragment_to_motionFragment)
         }
     }
 

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/motionLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    app:layoutDescription="@xml/fragment_motionr_scene">
+
+    <FrameLayout
+        android:id="@+id/bottomCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvPergunta"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="20dp"
+            app:cardPreventCornerOverlap="false">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/texto_pergunta"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:text="@string/exemplo_pergunta"
+                    android:textAlignment="center"
+                    android:textAppearance="?attr/textAppearanceHeadline5"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/topCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvPergunta2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="20dp"
+            app:cardPreventCornerOverlap="false">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/texto_pergunta2"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:text="@string/exemplo_pergunta"
+                    android:textAlignment="center"
+                    android:textAppearance="?attr/textAppearanceHeadline5"
+                    app:layout_constraintBottom_toTopOf="@id/helperText"
+                    android:layout_marginBottom="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/helperText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Deslize para um dos lados"
+                    app:layout_constraintTop_toBottomOf="@id/texto_pergunta2"
+                    app:layout_constraintBottom_toTopOf="@+id/btnFalseTwo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <Button
+                    android:id="@+id/btnTrueTwo"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="6dp"
+                    android:text="@string/verdadeiro"
+                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btnFalseTwo" />
+
+                <Button
+                    android:id="@+id/btnFalseTwo"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/falso"
+                    android:drawableLeft="@drawable/ic_baseline_keyboard_arrow_left_24"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btnTrueTwo"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/likeIcon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/backround_circle"
+        android:src="@drawable/ic_baseline_check_24"
+        app:tint="#fbc02d" />
+
+    <ImageView
+        android:id="@+id/passIcon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/backround_circle"
+        android:src="@drawable/ic_outline_cancel_24"
+        app:tint="#e64a19" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

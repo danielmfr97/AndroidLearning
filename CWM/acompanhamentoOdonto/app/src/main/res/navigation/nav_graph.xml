@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_quizFragment"
             app:destination="@id/quizFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_motionFragment"
+            app:destination="@id/motionFragment" />
     </fragment>
     <fragment
         android:id="@+id/ImageSwapFragment"
@@ -30,4 +33,8 @@
         android:name="br.com.daniel.ramos.acompanhamentoodonto.QuizFragment"
         android:label="fragment_quiz"
         tools:layout="@layout/fragment_quiz" />
+    <fragment
+        android:id="@+id/motionFragment"
+        android:name="br.com.daniel.ramos.acompanhamentoodonto.MotionFragment"
+        android:label="MotionFragment" />
 </navigation>
