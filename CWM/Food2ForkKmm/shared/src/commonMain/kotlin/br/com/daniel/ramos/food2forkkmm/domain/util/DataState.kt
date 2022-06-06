@@ -3,7 +3,7 @@ package br.com.daniel.ramos.food2forkkmm.domain.util
 /*
 * Wrapper that holds data
  */
-data class DataState< T>(
+data class DataState<T>(
     val message: String? = null,
     val data: T? = null,
     val isLoading: Boolean = false

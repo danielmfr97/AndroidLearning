@@ -13,15 +13,15 @@ class SearchRecipes(
         page: Int,
         query: String,
     ): Flow<DataState<List<Recipe>>> = flow {
-        emit(DataState.loading())
+        emit(DataState.loading<List<Recipe>>())
         try {
             val recipes = recipeService.search(
                 page = page,
                 query = query
             )
-            emit(DataState.data(message = null, data = recipes))
+            emit(DataState.data<List<Recipe>>(message = null, data = recipes))
         } catch (e: Exception) {
-            emit(DataState.error(message = e.message?: "Unknow error"))
+            emit(DataState.error<List<Recipe>>(message = e.message?: "Unknow error"))
         }
     }
 }

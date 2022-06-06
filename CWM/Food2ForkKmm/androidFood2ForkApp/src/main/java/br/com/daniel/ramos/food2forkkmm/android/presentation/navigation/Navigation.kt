@@ -9,34 +9,36 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
-import br.com.daniel.ramos.food2forkkmm.android.presentation.recipe_list.RecipeListViewModel
 import br.com.daniel.ramos.food2forkkmm.android.presentation.recipe_detail.RecipeDetailScreen
 import br.com.daniel.ramos.food2forkkmm.android.presentation.recipe_detail.RecipeDetailViewModel
 import br.com.daniel.ramos.food2forkkmm.android.presentation.recipe_list.RecipeListScreen
+import br.com.daniel.ramos.food2forkkmm.android.presentation.recipe_list.RecipeListViewModel
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
-
-        //=========== Recipe List Screen ===========//
         composable(route = Screen.RecipeList.route) { navBackStackEntry ->
-            val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry )
+            // in the future, the hilt-navigation-compose artifact will simplify this
+            val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
             val viewModel: RecipeListViewModel = viewModel("RecipeListViewModel", factory)
-            RecipeListScreen(onSelectedRecipe = { recipeId ->
-                navController.navigate(Screen.RecipeDetail.route + "/$recipeId")
-            })
+            RecipeListScreen(
+                onSelectedRecipe = { recipeId ->
+                    navController.navigate("${Screen.RecipeDetail.route}/$recipeId")
+                }
+            )
         }
-        //=========== Recipe Detail Screen ===========//
         composable(
-            route = Screen.RecipeList.route + "/{recipeId}",
+            route = Screen.RecipeDetail.route + "/{recipeId}",
             arguments = listOf(navArgument("recipeId") {
                 type = NavType.IntType
             })
         ) { navBackStackEntry ->
-            val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry )
+            val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
             val viewModel: RecipeDetailViewModel = viewModel("RecipeDetailViewModel", factory)
-            RecipeDetailScreen(recipe = viewModel.recipe  .value )
+            RecipeDetailScreen(
+                recipe = viewModel.recipe.value
+            )
         }
     }
 }

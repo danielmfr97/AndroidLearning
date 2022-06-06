@@ -10,13 +10,12 @@ class GetRecipe(
     private val recipeService: RecipeService
 ) {
     fun execute(recipeId: Int,): Flow<DataState<Recipe>> = flow {
-        emit(DataState.loading())
-
+        emit(DataState.loading<Recipe>())
         try {
             val recipe = recipeService.get(id = recipeId)
-            emit(DataState.data(message = null, data = recipe))
+            emit(DataState.data<Recipe>(message = null, data = recipe))
         } catch (e: Exception) {
-            emit(DataState.error(message = e.message?: "unknow error"))
+            emit(DataState.error<Recipe>(message = e.message?: "unknow error"))
         }
     }
 }

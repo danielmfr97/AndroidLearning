@@ -1,5 +1,3 @@
-import KotlinPlugins.cocoapods
-import Ktor.ios
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
@@ -78,11 +76,10 @@ kotlin {
 
 sqldelight {
     database("RecipeDatabase") {
-        packageName = "com.codingwithmitch.food2forkkmm.datasource.cache"
+        packageName = "br.com.daniel.ramos.food2forkkmm.datasource.cache"
         sourceFolders = listOf("sqldelight")
     }
 }
-
 
 
 
