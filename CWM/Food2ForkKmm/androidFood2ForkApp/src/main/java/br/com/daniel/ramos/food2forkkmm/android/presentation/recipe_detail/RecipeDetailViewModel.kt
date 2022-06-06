@@ -5,14 +5,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.daniel.ramos.food2forkkmm.datasource.network.RecipeService
 import br.com.daniel.ramos.food2forkkmm.domain.model.Recipe
+import br.com.daniel.ramos.food2forkkmm.interactors.recipe_detail.GetRecipe
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RecipeDetailViewModel @Inject constructor(private val savedStateHandle: SavedStateHandle, private val recipeService: RecipeService) : ViewModel() {
+class RecipeDetailViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    private val getRecipe: GetRecipe
+) : ViewModel() {
     val recipe: MutableState<Recipe?> = mutableStateOf(null)
 
     init {
@@ -22,8 +27,23 @@ class RecipeDetailViewModel @Inject constructor(private val savedStateHandle: Sa
     private fun getRecipeId() {
         savedStateHandle.get<Int>("recipeId")?.let { recipeId ->
             viewModelScope.launch {
-                recipe.value = recipeService.get(recipeId)
+                getRecipe(recipeId)
             }
         }
+    }
+
+    private fun getRecipe(recipeId: Int) {
+        getRecipe.execute(recipeId = recipeId).onEach { dataState ->
+            println("RecipeDetailViewModel ${dataState.isLoading}")
+
+            dataState.data?.let { recipes ->
+                println("RecipeDetailViewModel $recipes")
+                this.recipe.value = recipes
+            }
+
+            dataState.message?.let { message ->
+                println("RecipeDetailViewModel $message")
+            }
+        }.launchIn(viewModelScope)
     }
 }
