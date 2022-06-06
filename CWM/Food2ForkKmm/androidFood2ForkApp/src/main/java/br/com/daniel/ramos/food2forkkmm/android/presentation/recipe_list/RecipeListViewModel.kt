@@ -1,4 +1,4 @@
-package br.com.daniel.ramos.food2forkkmm.android
+package br.com.daniel.ramos.food2forkkmm.android.presentation.recipe_list
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

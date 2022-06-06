@@ -9,9 +9,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import br.com.daniel.ramos.food2forkkmm.domain.model.Recipe
 
 @Composable
-fun RecipeDetailScreen(recipeId: Int?,) {
-    if(recipeId == null)
-        Text("ERROR") else Text("RecipeDEtailScreen: $recipeId")
+fun RecipeDetailScreen(recipe: Recipe?,) {
+    if(recipe == null)
+        Text("ERROR") else Text("RecipeDEtailScreen: ${recipe.title}")
 }

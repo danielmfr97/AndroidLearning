@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
-import br.com.daniel.ramos.food2forkkmm.android.RecipeListViewModel
+import br.com.daniel.ramos.food2forkkmm.android.presentation.recipe_list.RecipeListViewModel
 import br.com.daniel.ramos.food2forkkmm.android.presentation.recipe_detail.RecipeDetailScreen
 import br.com.daniel.ramos.food2forkkmm.android.presentation.recipe_detail.RecipeDetailViewModel
 import br.com.daniel.ramos.food2forkkmm.android.presentation.recipe_list.RecipeListScreen
@@ -36,7 +36,7 @@ fun Navigation() {
         ) { navBackStackEntry ->
             val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry )
             val viewModel: RecipeDetailViewModel = viewModel("RecipeDetailViewModel", factory)
-            RecipeDetailScreen(recipeId = viewModel.recipeId.value )
+            RecipeDetailScreen(recipe = viewModel.recipe  .value )
         }
     }
 }
