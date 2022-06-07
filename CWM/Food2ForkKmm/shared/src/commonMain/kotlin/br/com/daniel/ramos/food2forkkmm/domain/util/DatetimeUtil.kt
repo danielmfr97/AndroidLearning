@@ -2,7 +2,7 @@ package br.com.daniel.ramos.food2forkkmm.domain.util
 
 import kotlinx.datetime.*
 
-class DatetimeUtil {
+object DatetimeUtil {
     fun now(): LocalDateTime {
         val currentMoment: Instant = Clock.System.now()
         return currentMoment.toLocalDateTime(TimeZone.UTC)

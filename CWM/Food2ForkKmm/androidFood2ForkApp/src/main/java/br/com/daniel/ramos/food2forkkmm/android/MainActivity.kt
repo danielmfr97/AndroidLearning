@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             val recipe = recipeService.get(recipeId)
             println("KtorTesT: ${recipe.title}")
             println("KtorTesT: ${recipe.ingredients}")
-            println("KtorTesT: ${DatetimeUtil().humanizeDatetime(recipe.dateUpdated)}")
+            println("KtorTesT: ${DatetimeUtil.humanizeDatetime(recipe.dateUpdated)}")
         }
         setContent {
             Navigation()

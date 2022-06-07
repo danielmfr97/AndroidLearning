@@ -9,7 +9,6 @@ expect class KtorClientFactory() {
     fun build(): HttpClient
 }
 
-val datetimeUtil = DatetimeUtil()
 
 fun RecipeDto.toRecipe(): Recipe {
     return Recipe(
@@ -20,8 +19,8 @@ fun RecipeDto.toRecipe(): Recipe {
         publisher = publisher,
         sourceUrl = sourceUrl,
         ingredients = ingredients,
-        dateAdded = datetimeUtil.toLocalDate(longDateAdded.toDouble()),
-        dateUpdated = datetimeUtil.toLocalDate(longDateUpdated.toDouble()),
+        dateAdded = DatetimeUtil.toLocalDate(longDateAdded.toDouble()),
+        dateUpdated = DatetimeUtil.toLocalDate(longDateUpdated.toDouble()),
     )
 }
 
