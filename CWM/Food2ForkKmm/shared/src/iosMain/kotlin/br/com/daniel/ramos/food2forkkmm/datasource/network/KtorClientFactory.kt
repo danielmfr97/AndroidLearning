@@ -11,7 +11,8 @@ actual class KtorClientFactory {
             install(JsonFeature) {
                 serializer = KotlinxSerializer(
                     kotlinx.serialization.json.Json {
-                        ignoreUnknownKeys = true //If the server sends extra fields, ignore them dont throw exception
+                        ignoreUnknownKeys =
+                            true //If the server sends extra fields, ignore them dont throw exception
                     }
                 )
             }
