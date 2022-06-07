@@ -1,5 +1,6 @@
 package br.com.daniel.ramos.food2forkkmm.android.di
 
+import br.com.daniel.ramos.food2forkkmm.datasource.cache.RecipeCache
 import br.com.daniel.ramos.food2forkkmm.datasource.network.RecipeService
 import br.com.daniel.ramos.food2forkkmm.interactors.recipe_detail.GetRecipe
 import br.com.daniel.ramos.food2forkkmm.interactors.recipe_list.SearchRecipes
@@ -16,16 +17,17 @@ object InteractorsModule {
     @Singleton
     @Provides
     fun provideSearchRecipe(
-        recipeService: RecipeService
+        recipeService: RecipeService,
+        recipeCache: RecipeCache
     ): SearchRecipes {
-        return SearchRecipes(recipeService = recipeService)
+        return SearchRecipes(recipeService = recipeService, recipeCache = recipeCache)
     }
 
     @Singleton
     @Provides
     fun provideGetRecipe(
-        recipeService: RecipeService
-    ): GetRecipe  {
-        return GetRecipe(recipeService = recipeService)
+        recipeCache: RecipeCache
+    ): GetRecipe {
+        return GetRecipe(recipeCache = recipeCache)
     }
 }
