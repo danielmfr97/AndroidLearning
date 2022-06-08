@@ -9,17 +9,21 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import br.com.daniel.ramos.food2forkkmm.android.presentation.theme.AppTheme
 
 @Composable
 fun RecipeListScreen(onSelectedRecipe: (Int) -> Unit) {
-    LazyColumn {
-        items(1000) { recipeId ->
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    onSelectedRecipe(recipeId)
-                }) {
-                Text(modifier = Modifier.padding(16.dp), text = "RecipeId = ${recipeId}")
+
+    AppTheme(displayProgressBar = false) {
+        LazyColumn {
+            items(1000) { recipeId ->
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        onSelectedRecipe(recipeId)
+                    }) {
+                    Text(modifier = Modifier.padding(16.dp), text = "RecipeId = ${recipeId}")
+                }
             }
         }
     }
