@@ -10,7 +10,6 @@ import br.com.daniel.ramos.food2forkkmm.interactors.recipe_detail.GetRecipe
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,28 +20,22 @@ class RecipeDetailViewModel @Inject constructor(
     val recipe: MutableState<Recipe?> = mutableStateOf(null)
 
     init {
-        getRecipeId()
-    }
-
-    private fun getRecipeId() {
         savedStateHandle.get<Int>("recipeId")?.let { recipeId ->
-            viewModelScope.launch {
-                getRecipe(recipeId)
-            }
+            getRecipe(recipeId = recipeId)
         }
     }
 
-    private fun getRecipe(recipeId: Int) {
+    private fun getRecipe(recipeId: Int){
         getRecipe.execute(recipeId = recipeId).onEach { dataState ->
-            println("RecipeDetailViewModel ${dataState.isLoading}")
+            println("RecipeDetailVM: loading: ${dataState.isLoading}")
 
-            dataState.data?.let { recipes ->
-                println("RecipeDetailViewModel $recipes")
-                this.recipe.value = recipes
+            dataState.data?.let { recipe ->
+                println("RecipeDetailVM: recipe: ${recipe}")
+                this.recipe.value = recipe
             }
 
             dataState.message?.let { message ->
-                println("RecipeDetailViewModel $message")
+                println("RecipeDetailVM: error: ${message}")
             }
         }.launchIn(viewModelScope)
     }

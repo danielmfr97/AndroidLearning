@@ -15,7 +15,7 @@ import br.com.daniel.ramos.food2forkkmm.android.presentation.recipe_list.RecipeL
 import br.com.daniel.ramos.food2forkkmm.android.presentation.recipe_list.RecipeListViewModel
 
 @Composable
-fun Navigation() {
+fun Navigation(){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
         composable(route = Screen.RecipeList.route) { navBackStackEntry ->
@@ -23,7 +23,7 @@ fun Navigation() {
             val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
             val viewModel: RecipeListViewModel = viewModel("RecipeListViewModel", factory)
             RecipeListScreen(
-                onSelectedRecipe = { recipeId ->
+                onSelectRecipe = { recipeId ->
                     navController.navigate("${Screen.RecipeDetail.route}/$recipeId")
                 }
             )
