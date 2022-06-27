@@ -8,11 +8,10 @@ import br.com.daniel.ramos.food2forkkmm.presentation.recipe_list.RecipeListState
 @Composable
 fun RecipeListScreen(
     state: RecipeListState,
-    // events: (RecipeListEvent) -> Unit,
-    onClickRecipeListItem: (Int) -> Unit,
+      onClickRecipeListItem: (Int) -> Unit,
 ){
     AppTheme(
-        displayProgressBar = false
+        displayProgressBar = state.isLoading
     ) {
         RecipeList(
             isLoading = state.isLoading,

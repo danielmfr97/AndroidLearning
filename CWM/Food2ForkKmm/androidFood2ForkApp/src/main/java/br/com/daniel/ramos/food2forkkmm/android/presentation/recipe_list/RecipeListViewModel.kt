@@ -29,7 +29,6 @@ class RecipeListViewModel @Inject constructor(
             page = state.value.page,
             query = state.value.query,
         ).onEach { dataState ->
-            println("RecipeListVM: ${dataState.isLoading}")
             state.value = state.value.copy(isLoading = dataState.isLoading)
 
             dataState.data?.let { recipes ->
