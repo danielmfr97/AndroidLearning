@@ -4,6 +4,7 @@ import br.com.daniel.ramos.food2forkkmm.datasource.cache.RecipeCache
 import br.com.daniel.ramos.food2forkkmm.datasource.network.RecipeService
 import br.com.daniel.ramos.food2forkkmm.domain.model.Recipe
 import br.com.daniel.ramos.food2forkkmm.domain.util.DataState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -21,6 +22,8 @@ class SearchRecipes(
                 page = page,
                 query = query
             )
+            //Delay to see loading
+            delay(5000)
 
             recipeCache.insert(recipes)
             val cacheResult = if (query.isBlank()) {
