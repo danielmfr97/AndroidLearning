@@ -12,7 +12,7 @@ fun RecipeListScreen(
     onClickRecipeListItem: (Int) -> Unit,
 ){
     AppTheme(
-        displayProgressBar = false
+        displayProgressBar = state.isLoading
     ) {
         RecipeList(
             isLoading = state.isLoading,
