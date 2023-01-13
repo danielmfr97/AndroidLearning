@@ -25,6 +25,8 @@ class SearchRecipes(
             // Delay 500ms to see loading
             delay(500)
 
+            delay(5000)
+
             recipeCache.insert(recipes)
             val cacheResult = if (query.isBlank()) {
                 recipeCache.getAll(page = page)
