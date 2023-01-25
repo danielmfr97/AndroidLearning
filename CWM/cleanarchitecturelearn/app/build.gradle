@@ -1,13 +1,17 @@
-plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-android-extensions'
-    id 'kotlin-kapt'
-}
+import dependencies.dependencies.AndroidTestDependencies
+import dependencies.dependencies.Dependencies
+import dependencies.dependencies.SupportDependencies
+
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdk 33
-
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.example.cleanarchitecturelearn"
         minSdk 21
@@ -15,13 +19,13 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner AndroidTestDependencies.instrumentation_runner
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
 
         debug {
@@ -33,20 +37,24 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation Dependencies.ktx
+    implementation SupportDependencies.appcompat
+    androidTestImplementation AndroidTestDependencies.androidx_test_ext
+    androidTestImplementation AndroidTestDependencies.espresso_core
 
-    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
-    implementation "com.google.android.material:material:1.7.0"
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01"
+    //Dagger
+    implementation Dependencies.dagger
+    annotationProcessor "com.google.dagger:dagger-compiler:2.37"
 
+    // Dependencies
+    implementation SupportDependencies.constraintlayout
+    implementation SupportDependencies.material_design
+    implementation SupportDependencies.swipe_refresh_layout
 }
