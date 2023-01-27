@@ -53,6 +53,12 @@ dependencies {
     implementation Dependencies.dagger
     annotationProcessor "com.google.dagger:dagger-compiler:2.37"
 
+
+    // Kotlin coroutines
+    implementation Dependencies.kotlin_coroutines
+    implementation Dependencies.kotlin_coroutines_android
+    implementation Dependencies.kotlin_coroutines_play_services // firestore need this
+
     // Dependencies
     implementation SupportDependencies.constraintlayout
     implementation SupportDependencies.material_design
