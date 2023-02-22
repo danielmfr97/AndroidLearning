@@ -23,4 +23,4 @@ interface NoteFirestoreService {
     suspend fun getAllNotes(): List<Note>
 
     suspend fun insertOrUpdateNotes(notes: List<Note>)
-}
+ }
