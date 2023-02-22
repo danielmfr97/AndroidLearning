@@ -2,6 +2,7 @@ package com.example.cleanarchitecturelearn.business.data.cache.implementation
 
 import com.example.cleanarchitecturelearn.business.data.cache.abstraction.NoteCacheDataSource
 import com.example.cleanarchitecturelearn.business.domain.model.Note
+import com.example.cleanarchitecturelearn.framework.datasource.cache.abstraction.NoteDaoService
 import javax.inject.Inject
 import javax.inject.Singleton
 
