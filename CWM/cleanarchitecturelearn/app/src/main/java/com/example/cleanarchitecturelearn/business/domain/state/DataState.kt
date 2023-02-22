@@ -1,8 +1,5 @@
 package com.example.cleanarchitecturelearn.business.domain.state
 
-import com.codingwithmitch.cleannotes.business.domain.state.Response
-import com.codingwithmitch.cleannotes.business.domain.state.StateMessage
-
 
 data class DataState<T>(
     var stateMessage: StateMessage? = null,

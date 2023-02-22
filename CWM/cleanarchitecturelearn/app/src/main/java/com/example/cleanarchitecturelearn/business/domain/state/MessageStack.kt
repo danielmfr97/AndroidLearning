@@ -3,11 +3,7 @@ package com.example.cleanarchitecturelearn.business.domain.state
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.codingwithmitch.cleannotes.business.domain.state.MessageType
-import com.codingwithmitch.cleannotes.business.domain.state.Response
-import com.codingwithmitch.cleannotes.business.domain.state.StateMessage
-import com.codingwithmitch.cleannotes.business.domain.state.UIComponentType
-import com.codingwithmitch.cleannotes.util.printLogD
+import com.example.cleanarchitecturelearn.util.printLogD
 import kotlinx.android.parcel.IgnoredOnParcel
 import java.lang.IndexOutOfBoundsException
 

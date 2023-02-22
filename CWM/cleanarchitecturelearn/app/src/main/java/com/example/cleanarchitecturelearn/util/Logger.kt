@@ -1,4 +1,4 @@
-package com.codingwithmitch.cleannotes.util
+package com.example.cleanarchitecturelearn.util
 
 import android.util.Log
 import com.codingwithmitch.cleannotes.util.Constants.DEBUG
