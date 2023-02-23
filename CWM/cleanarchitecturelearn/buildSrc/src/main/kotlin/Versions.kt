@@ -21,6 +21,7 @@ object Versions {
     const val firebase_firestore = "21.4.2"
     const val firebase_analytics = "17.4.0"
     const val firebase_crashlytics = "2.10.1"
+    const val firebase_bom = "31.2.2"
     const val firebase_auth = "19.3.0"
     const val espresso_core = "3.1.1"
     const val espresso_idling_resource = "3.2.0"

@@ -21,8 +21,8 @@ constructor(private val noteDaoService: NoteDaoService) : NoteCacheDataSource {
     override suspend fun updateNote(primaryKey: String, newTitle: String, newBody: String): Int =
         noteDaoService.updateNote(primaryKey, newTitle, newBody)
 
-    override suspend fun searchNotes(query: String, filterAndOrder: String, page: Int): List<Note> =
-        noteDaoService.searchNotes(query, filterAndOrder, page)
+    override suspend fun searchNotes(query: String, filterAndOrder: String, page: Int): List<Note> = emptyList()
+//        noteDaoService.searchNotes(query, filterAndOrder, page)
 
     override suspend fun searchNoteById(primaryKey: String): Note? =
         noteDaoService.searchNoteById(primaryKey)

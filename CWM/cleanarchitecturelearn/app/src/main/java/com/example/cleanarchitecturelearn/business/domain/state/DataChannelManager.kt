@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.onEach
 @ExperimentalCoroutinesApi
 abstract class DataChannelManager<ViewState> {
 
-    private val dataChannel = BroadcastChannel<DataState<ViewState>>(Channel.BUFFERED)
     private var channelScope: CoroutineScope? = null
     private val stateEventManager: StateEventManager = StateEventManager()
 
@@ -25,56 +24,52 @@ abstract class DataChannelManager<ViewState> {
 
     fun setupChannel(){
         cancelJobs()
-        initChannel()
-    }
-
-    private fun initChannel(){
-        dataChannel
-            .asFlow()
-            .onEach{ dataState ->
-                withContext(Main){
-                    dataState.data?.let { data ->
-                        handleNewData(data)
-                    }
-                    dataState.stateMessage?.let { stateMessage ->
-                        handleNewStateMessage(stateMessage)
-                    }
-                    dataState.stateEvent?.let { stateEvent ->
-                        removeStateEvent(stateEvent)
-                    }
-                }
-            }
-            .launchIn(getChannelScope())
     }
 
     abstract fun handleNewData(data: ViewState)
-
-    private fun offerToDataChannel(dataState: DataState<ViewState>){
-        dataChannel.let {
-            if(!it.isClosedForSend){
-                it.offer(dataState)
-            }
-        }
-    }
 
     fun launchJob(
         stateEvent: StateEvent,
         jobFunction: Flow<DataState<ViewState>?>
     ){
-        if(!isStateEventActive(stateEvent)){
+        if(canExecuteNewStateEvent(stateEvent)){
             printLogD("DCM", "launching job: ${stateEvent.eventName()}")
             addStateEvent(stateEvent)
             jobFunction
                 .onEach { dataState ->
                     dataState?.let { dState ->
-                        offerToDataChannel(dState)
+                        withContext(Main){
+                            dataState.data?.let { data ->
+                                handleNewData(data)
+                            }
+                            dataState.stateMessage?.let { stateMessage ->
+                                handleNewStateMessage(stateMessage)
+                            }
+                            dataState.stateEvent?.let { stateEvent ->
+                                removeStateEvent(stateEvent)
+                            }
+                        }
                     }
                 }
                 .launchIn(getChannelScope())
         }
     }
 
-    private fun isMessageStackEmpty(): Boolean {
+    private fun canExecuteNewStateEvent(stateEvent: StateEvent): Boolean{
+        // If a job is already active, do not allow duplication
+        if(isJobAlreadyActive(stateEvent)){
+            return false
+        }
+        // Check the top of the stack, if a dialog is showing, do not allow new StateEvents
+        if(!isMessageStackEmpty()){
+            if(messageStack[0].response.uiComponentType == UIComponentType.Dialog()){
+                return false
+            }
+        }
+        return true
+    }
+
+    fun isMessageStackEmpty(): Boolean {
         return messageStack.isStackEmpty()
     }
 
@@ -86,7 +81,10 @@ abstract class DataChannelManager<ViewState> {
         messageStack.add(stateMessage)
     }
 
-    fun clearStateMessage(index: Int = 0) = messageStack.removeAt(index)
+    fun clearStateMessage(index: Int = 0){
+        printLogD("DataChannelManager", "clear state message")
+        messageStack.removeAt(index)
+    }
 
     fun clearAllStateMessages() = messageStack.clear()
 
@@ -102,7 +100,7 @@ abstract class DataChannelManager<ViewState> {
     fun clearActiveStateEventCounter()
             = stateEventManager.clearActiveStateEventCounter()
 
-    private fun addStateEvent(stateEvent: StateEvent)
+    fun addStateEvent(stateEvent: StateEvent)
             = stateEventManager.addStateEvent(stateEvent)
 
     fun removeStateEvent(stateEvent: StateEvent?)
@@ -133,5 +131,4 @@ abstract class DataChannelManager<ViewState> {
         }
         clearActiveStateEventCounter()
     }
-
 }
