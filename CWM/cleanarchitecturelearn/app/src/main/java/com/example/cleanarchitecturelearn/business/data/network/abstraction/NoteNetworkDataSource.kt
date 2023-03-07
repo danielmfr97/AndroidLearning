@@ -10,11 +10,11 @@ interface NoteNetworkDataSource {
 
     suspend fun insertDeletedNote(note: Note)
 
-    suspend fun insertDeletedNoted(notes: List<Note>)
+    suspend fun insertDeletedNotes(notes: List<Note>)
 
     suspend fun deleteDeletedNote(note: Note)
 
-    suspend fun getDeletedNote(): List<Note>
+    suspend fun getDeletedNotes(): List<Note>
 
     suspend fun deleteAllNotes()
 

@@ -1,6 +1,7 @@
 import dependencies.dependencies.AndroidTestDependencies
 import dependencies.dependencies.Dependencies
 import dependencies.dependencies.SupportDependencies
+import dependencies.dependencies.TestDependencies
 
 apply plugin: 'com.android.application'
 
@@ -39,6 +40,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -48,6 +55,13 @@ dependencies {
     implementation SupportDependencies.appcompat
     androidTestImplementation AndroidTestDependencies.androidx_test_ext
     androidTestImplementation AndroidTestDependencies.espresso_core
+
+    // Unit tests
+    testImplementation TestDependencies.mockk
+    testImplementation TestDependencies.jupiter_api
+    testImplementation TestDependencies.jupiter_params
+    testImplementation TestDependencies.junit4
+    testRuntimeOnly TestDependencies.jupiter_engine
 
     //Dagger
     implementation Dependencies.dagger

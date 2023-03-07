@@ -12,9 +12,14 @@ interface NoteDaoService {
 
     suspend fun deleteNotes(notes: List<Note>): Int
 
-    suspend fun updateNote(primaryKey: String, newTitle: String, newBody: String): Int
+    suspend fun getAllNotes(): List<Note>
 
-    suspend fun searchNotes(): List<Note>
+    suspend fun updateNote(
+        primaryKey: String,
+        title: String,
+        body: String?,
+        timestamp: String?
+    ): Int
 
     suspend fun searchNotesOrderByDateDESC(
         query: String,

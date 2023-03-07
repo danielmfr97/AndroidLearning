@@ -17,11 +17,11 @@ constructor(private val noteFirestoreService: NoteFirestoreService): NoteNetwork
 
     override suspend fun insertDeletedNote(note: Note) = noteFirestoreService.insertDeletedNote(note)
 
-    override suspend fun insertDeletedNoted(notes: List<Note>) = noteFirestoreService.insertDeletedNoted(notes)
+    override suspend fun insertDeletedNotes(notes: List<Note>) = noteFirestoreService.insertDeletedNoted(notes)
 
     override suspend fun deleteDeletedNote(note: Note) = noteFirestoreService.deleteDeletedNote(note)
 
-    override suspend fun getDeletedNote(): List<Note> = noteFirestoreService.getDeletedNote()
+    override suspend fun getDeletedNotes(): List<Note> = noteFirestoreService.getDeletedNote()
 
     override suspend fun deleteAllNotes() = noteFirestoreService.deleteAllNotes()
 
